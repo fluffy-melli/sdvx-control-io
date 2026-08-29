@@ -7,6 +7,20 @@
 #include "key/constant.h"
 #include "runtime/value.h"
 
+void wait_interval(LARGE_INTEGER started, LARGE_INTEGER interval) {
+    LARGE_INTEGER now;
+    QueryPerformanceCounter(&now);
+
+    LONGLONG elapsed = now.QuadPart - started.QuadPart;
+    LONGLONG remaining = interval.QuadPart - elapsed;
+
+    if (remaining > 0) {
+        DWORD milliseconds = (DWORD) (((double) remaining * 1000.0 / runtime_frequency.QuadPart) + 0.999);
+        Sleep(milliseconds);
+    }
+}
+
+
 LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (runtime_enabled && nCode >= 0 && wParam == WM_MOUSEMOVE) {
         MSLLHOOKSTRUCT *mouse = (MSLLHOOKSTRUCT *) lParam;
@@ -17,16 +31,32 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
         LONG dy = point.y - runtime_mouse_y;
 
         if (dx == 0) {
+            if (runtime_knob_left) {
+                wait_interval(runtime_knob_left_maintain, runtime_mouse_interval);
+            }
+
             runtime_knob_left = false;
             runtime_knob_left_maintain.QuadPart = 0;
+
+            if (runtime_knob_right) {
+                wait_interval(runtime_knob_right_maintain, runtime_mouse_interval);
+            }
 
             runtime_knob_right = false;
             runtime_knob_right_maintain.QuadPart = 0;
         }
 
         if (dy == 0) {
+            if (runtime_knob_up) {
+                wait_interval(runtime_knob_up_maintain, runtime_mouse_interval);
+            }
+
             runtime_knob_up = false;
             runtime_knob_up_maintain.QuadPart = 0;
+
+            if (runtime_knob_down) {
+                wait_interval(runtime_knob_down_maintain, runtime_mouse_interval);
+            }
 
             runtime_knob_down = false;
             runtime_knob_down_maintain.QuadPart = 0;
@@ -36,6 +66,7 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
             if (!runtime_knob_left) {
                 QueryPerformanceCounter(&runtime_knob_left_maintain);
             }
+
             runtime_knob_left = true;
         }
 
@@ -43,6 +74,7 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
             if (!runtime_knob_right) {
                 QueryPerformanceCounter(&runtime_knob_right_maintain);
             }
+
             runtime_knob_right = true;
         }
 
@@ -50,6 +82,7 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
             if (!runtime_knob_up) {
                 QueryPerformanceCounter(&runtime_knob_up_maintain);
             }
+
             runtime_knob_up = true;
         }
 

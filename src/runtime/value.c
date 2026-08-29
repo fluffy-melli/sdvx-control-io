@@ -19,4 +19,6 @@ void runtime_init(LONG mouse_x, LONG mouse_y) {
     runtime_knob_left_maintain.QuadPart = 0;
     runtime_knob_down_maintain.QuadPart = 0;
     runtime_knob_right_maintain.QuadPart = 0;
+
+    runtime_mouse_interval.QuadPart = (LONGLONG) ((double) runtime_frequency.QuadPart / 30);
 }
