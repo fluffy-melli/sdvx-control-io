@@ -7,26 +7,26 @@
 
 #define KEY_ENABLED 0x57 // F11
 
-#define KEY_NUMBER_0 0x30
-#define KEY_NUMBER_1 0x31
-#define KEY_NUMBER_2 0x32
-#define KEY_NUMBER_3 0x33
-#define KEY_NUMBER_4 0x34
-#define KEY_NUMBER_5 0x35
-#define KEY_NUMBER_6 0x36
-#define KEY_NUMBER_7 0x37
-#define KEY_NUMBER_8 0x38
-#define KEY_NUMBER_9 0x39
+#define KEY_NUMBER_0 0x0B
+#define KEY_NUMBER_1 0x02
+#define KEY_NUMBER_2 0x03
+#define KEY_NUMBER_3 0x04
+#define KEY_NUMBER_4 0x05
+#define KEY_NUMBER_5 0x06
+#define KEY_NUMBER_6 0x07
+#define KEY_NUMBER_7 0x08
+#define KEY_NUMBER_8 0x09
+#define KEY_NUMBER_9 0x0A
 
-#define KEY_NUMPAD_0 0x60
-#define KEY_NUMPAD_1 0x61
-#define KEY_NUMPAD_2 0x62
-#define KEY_NUMPAD_3 0x63
-#define KEY_NUMPAD_4 0x64
-#define KEY_NUMPAD_5 0x65
-#define KEY_NUMPAD_6 0x66
-#define KEY_NUMPAD_7 0x67
-#define KEY_NUMPAD_8 0x68
-#define KEY_NUMPAD_9 0x69
+#define KEY_NUMPAD_0 0x52
+#define KEY_NUMPAD_1 0x4F
+#define KEY_NUMPAD_2 0x50
+#define KEY_NUMPAD_3 0x51
+#define KEY_NUMPAD_4 0x4B
+#define KEY_NUMPAD_5 0x4C
+#define KEY_NUMPAD_6 0x4D
+#define KEY_NUMPAD_7 0x47
+#define KEY_NUMPAD_8 0x48
+#define KEY_NUMPAD_9 0x49
 
 int key_number_2_numpad(int number);
