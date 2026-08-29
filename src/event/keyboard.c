@@ -25,16 +25,20 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                 return 1;
             }
 
-            if ((code >= KEY_NUMBER_1 && code <= KEY_NUMBER_9) || code == KEY_NUMBER_0) {
-                key_input(key_number_2_numpad(code), true);
-                return 1;
+            if (runtime_enabled) {
+                if ((code >= KEY_NUMBER_1 && code <= KEY_NUMBER_9) || code == KEY_NUMBER_0) {
+                    key_input(key_number_2_numpad(code), true);
+                    return 1;
+                }
             }
         }
 
         if (wParam == WM_KEYUP || wParam == WM_SYSKEYUP) {
-            if ((code >= KEY_NUMBER_1 && code <= KEY_NUMBER_9) || code == KEY_NUMBER_0) {
-                key_input(key_number_2_numpad(code), false);
-                return 1;
+            if (runtime_enabled) {
+                if ((code >= KEY_NUMBER_1 && code <= KEY_NUMBER_9) || code == KEY_NUMBER_0) {
+                    key_input(key_number_2_numpad(code), false);
+                    return 1;
+                }
             }
         }
     }
