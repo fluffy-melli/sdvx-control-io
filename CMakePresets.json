@@ -1,0 +1,22 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "windows-x86_64",
+            "generator": "Ninja",
+            "binaryDir": "build/windows-x86_64",
+            "toolchainFile": "cmake/toolchains/windows-x86_64.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreadedDLL",
+                "CMAKE_POLICY_VERSION_MINIMUM": "3.5"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "windows-x86_64",
+            "configurePreset": "windows-x86_64"
+        }
+    ]
+}
