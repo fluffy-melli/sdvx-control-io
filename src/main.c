@@ -2,6 +2,7 @@
 
 #include "event/mouse.h"
 #include "event/keyboard.h"
+#include "runtime/value.h"
 
 int main() {
     HHOOK mouseHook = SetWindowsHookEx(
@@ -33,6 +34,8 @@ int main() {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+
+    runtime_deinit();
 
     UnhookWindowsHookEx(keyboardHook);
     UnhookWindowsHookEx(mouseHook);

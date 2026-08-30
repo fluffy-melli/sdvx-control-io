@@ -16,54 +16,52 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
         LONG dx = point.x - runtime_mouse_x;
         LONG dy = point.y - runtime_mouse_y;
 
-        if (dx == 0) {
-            runtime_knob_left = false;
-            runtime_knob_right = false;
-        }
-
-        if (dy == 0) {
-            runtime_knob_up = false;
-            runtime_knob_down = false;
-        }
-
         if (dx < 0) {
-            runtime_knob_left = true;
+            if (!runtime_knob_left) {
+                key_input(KEY_1, true);
+                runtime_knob_left = true;
+            }
+        } else {
+            if (runtime_knob_left) {
+                key_input(KEY_1, false);
+                runtime_knob_left = false;
+            }
         }
 
         if (dx > 0) {
-            runtime_knob_right = true;
+            if (!runtime_knob_right) {
+                key_input(KEY_2, true);
+                runtime_knob_right = true;
+            }
+        } else {
+            if (runtime_knob_right) {
+                key_input(KEY_2, false);
+                runtime_knob_right = false;
+            }
         }
 
         if (dy < 0) {
-            runtime_knob_up = true;
+            if (!runtime_knob_up) {
+                key_input(KEY_3, true);
+                runtime_knob_up = true;
+            }
+        } else {
+            if (runtime_knob_up) {
+                key_input(KEY_3, false);
+                runtime_knob_up = false;
+            }
         }
 
         if (dy > 0) {
-            runtime_knob_down = true;
-        }
-
-        if (runtime_knob_left) {
-            key_input(KEY_1, true);
+            if (!runtime_knob_down) {
+                key_input(KEY_4, true);
+                runtime_knob_down = true;
+            }
         } else {
-            key_input(KEY_1, false);
-        }
-
-        if (runtime_knob_right) {
-            key_input(KEY_2, true);
-        } else {
-            key_input(KEY_2, false);
-        }
-
-        if (runtime_knob_up) {
-            key_input(KEY_3, true);
-        } else {
-            key_input(KEY_3, false);
-        }
-
-        if (runtime_knob_down) {
-            key_input(KEY_4, true);
-        } else {
-            key_input(KEY_4, false);
+            if (runtime_knob_down) {
+                key_input(KEY_4, false);
+                runtime_knob_down = false;
+            }
         }
 
         SetCursorPos(runtime_mouse_x, runtime_mouse_y);

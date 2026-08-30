@@ -13,3 +13,4 @@ bool runtime_knob_down;
 bool runtime_knob_right;
 
 void runtime_init(LONG mouse_x, LONG mouse_y);
+void runtime_deinit();
