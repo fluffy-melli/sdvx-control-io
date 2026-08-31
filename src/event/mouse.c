@@ -64,8 +64,6 @@ LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
             }
         }
 
-        SetCursorPos(runtime_mouse_x, runtime_mouse_y);
-
         return 1;
     }
 
