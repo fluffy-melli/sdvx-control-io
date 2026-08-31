@@ -20,6 +20,8 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                     POINT point;
                     GetCursorPos(&point);
                     runtime_init(point.x, point.y);
+                } else {
+                    runtime_deinit();
                 }
 
                 return 1;
