@@ -12,5 +12,10 @@ LARGE_INTEGER runtime_knob_left_last_update;
 LARGE_INTEGER runtime_knob_down_last_update;
 LARGE_INTEGER runtime_knob_right_last_update;
 
+LARGE_INTEGER runtime_knob_up_last_active;
+LARGE_INTEGER runtime_knob_left_last_active;
+LARGE_INTEGER runtime_knob_down_last_active;
+LARGE_INTEGER runtime_knob_right_last_active;
+
 void runtime_init();
 void runtime_deinit();
