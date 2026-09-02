@@ -1,18 +1,44 @@
 #include <windows.h>
 
+#include "event/wnd.h"
 #include "event/mouse.h"
 #include "event/keyboard.h"
 #include "runtime/value.h"
 
 int main() {
-    HHOOK mouseHook = SetWindowsHookEx(
-        WH_MOUSE_LL,
-        MouseProc,
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+
+    WNDCLASSA wc = {0};
+    wc.lpfnWndProc = WndProc;
+    wc.hInstance = hInstance;
+    wc.lpszClassName = "sdvx-control-io-window";
+    RegisterClassA(&wc);
+
+    HWND hwnd = CreateWindowExA(
+        0,
+        wc.lpszClassName,
+        "sdvx-control-io",
+        0,
+        0, 0,
+        0, 0,
+        HWND_MESSAGE,
         NULL,
-        0
+        hInstance,
+        NULL
     );
 
-    if (mouseHook == NULL) {
+    if (hwnd == NULL) {
+        return 1;
+    }
+
+    RAWINPUTDEVICE rid;
+    rid.usUsagePage = 0x01;
+    rid.usUsage = 0x02;
+    rid.dwFlags = RIDEV_INPUTSINK;
+    rid.hwndTarget = hwnd;
+
+    runtime_init();
+    if (!RegisterRawInputDevices(&rid, 1, sizeof(rid))) {
         return 1;
     }
 
@@ -24,7 +50,6 @@ int main() {
     );
 
     if (keyboardHook == NULL) {
-        UnhookWindowsHookEx(mouseHook);
         return 1;
     }
 
@@ -36,9 +61,7 @@ int main() {
     }
 
     runtime_deinit();
-
     UnhookWindowsHookEx(keyboardHook);
-    UnhookWindowsHookEx(mouseHook);
 
     return 0;
 }

@@ -7,70 +7,57 @@
 #include "key/constant.h"
 #include "runtime/value.h"
 
-LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
-    if (runtime_enabled && nCode >= 0 && wParam == WM_MOUSEMOVE) {
-        MSLLHOOKSTRUCT *mouse = (MSLLHOOKSTRUCT *) lParam;
+void mouse_move_event(LONG dx, LONG dy) {
+    LARGE_INTEGER now;
+    QueryPerformanceCounter(&now);
 
-        POINT point = mouse->pt;
+    bool knob_left = dx < 0;
+    bool knob_right = dx > 0;
 
-        LONG dx = point.x - runtime_mouse_x;
-        LONG dy = point.y - runtime_mouse_y;
+    bool knob_up = dy < 0;
+    bool knob_down = dy > 0;
 
-        if (dx < 0) {
-            if (!runtime_knob_left) {
-                key_input(KEY_1, true);
-                runtime_knob_left = true;
-            }
-        } else {
-            if (runtime_knob_left) {
-                key_input(KEY_1, false);
-                runtime_knob_left = false;
-            }
+    if (knob_left) {
+        LONGLONG elapsed = now.QuadPart - runtime_knob_left_last_update.QuadPart;
+        if (elapsed >= runtime_frequency.QuadPart * 16 / 1000) {
+            QueryPerformanceCounter(&runtime_knob_left_last_update);
+            key_input(KEY_1, true);
         }
-
-        if (dx > 0) {
-            if (!runtime_knob_right) {
-                key_input(KEY_2, true);
-                runtime_knob_right = true;
-            }
-        } else {
-            if (runtime_knob_right) {
-                key_input(KEY_2, false);
-                runtime_knob_right = false;
-            }
-        }
-
-        if (dy < 0) {
-            if (!runtime_knob_up) {
-                key_input(KEY_3, true);
-                runtime_knob_up = true;
-            }
-        } else {
-            if (runtime_knob_up) {
-                key_input(KEY_3, false);
-                runtime_knob_up = false;
-            }
-        }
-
-        if (dy > 0) {
-            if (!runtime_knob_down) {
-                key_input(KEY_4, true);
-                runtime_knob_down = true;
-            }
-        } else {
-            if (runtime_knob_down) {
-                key_input(KEY_4, false);
-                runtime_knob_down = false;
-            }
-        }
-
-        return 1;
+    } else if (runtime_knob_left_last_update.QuadPart != 0) {
+        runtime_knob_left_last_update.QuadPart = 0;
+        key_input(KEY_1, false);
     }
 
-    return CallNextHookEx(
-        NULL,
-        nCode,
-        wParam,
-        lParam
-    );
+    if (knob_right) {
+        LONGLONG elapsed = now.QuadPart - runtime_knob_right_last_update.QuadPart;
+        if (elapsed >= runtime_frequency.QuadPart * 16 / 1000) {
+            QueryPerformanceCounter(&runtime_knob_right_last_update);
+            key_input(KEY_2, true);
+        }
+    } else if (runtime_knob_right_last_update.QuadPart != 0) {
+        runtime_knob_right_last_update.QuadPart = 0;
+        key_input(KEY_2, false);
+    }
+
+    if (knob_up) {
+        LONGLONG elapsed = now.QuadPart - runtime_knob_up_last_update.QuadPart;
+        if (elapsed >= runtime_frequency.QuadPart * 16 / 1000) {
+            QueryPerformanceCounter(&runtime_knob_up_last_update);
+            key_input(KEY_3, true);
+        }
+    } else if (runtime_knob_up_last_update.QuadPart != 0) {
+        runtime_knob_up_last_update.QuadPart = 0;
+        key_input(KEY_3, false);
+    }
+
+    if (knob_down) {
+        LONGLONG elapsed = now.QuadPart - runtime_knob_down_last_update.QuadPart;
+        if (elapsed >= runtime_frequency.QuadPart * 16 / 1000) {
+            QueryPerformanceCounter(&runtime_knob_down_last_update);
+            key_input(KEY_4, true);
+        }
+    } else if (runtime_knob_down_last_update.QuadPart != 0) {
+        runtime_knob_down_last_update.QuadPart = 0;
+        key_input(KEY_4, false);
+    }
 }

@@ -17,9 +17,7 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                 runtime_enabled = !runtime_enabled;
 
                 if (runtime_enabled) {
-                    POINT point;
-                    GetCursorPos(&point);
-                    runtime_init(point.x, point.y);
+                    runtime_enabled = true;
                 } else {
                     runtime_deinit();
                 }

@@ -2,15 +2,14 @@
 
 #include <stdbool.h>
 
-LONG runtime_mouse_x;
-LONG runtime_mouse_y;
-
 bool runtime_enabled;
 
-bool runtime_knob_up;
-bool runtime_knob_left;
-bool runtime_knob_down;
-bool runtime_knob_right;
+LARGE_INTEGER runtime_frequency;
 
-void runtime_init(LONG mouse_x, LONG mouse_y);
+LARGE_INTEGER runtime_knob_up_last_update;
+LARGE_INTEGER runtime_knob_left_last_update;
+LARGE_INTEGER runtime_knob_down_last_update;
+LARGE_INTEGER runtime_knob_right_last_update;
+
+void runtime_init();
 void runtime_deinit();

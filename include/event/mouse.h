@@ -2,4 +2,4 @@
 
 #include <windows.h>
 
-LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam);
+void mouse_move_event(LONG dx, LONG dy);

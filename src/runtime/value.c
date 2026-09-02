@@ -4,38 +4,37 @@
 #include "key/constant.h"
 #include "runtime/value.h"
 
-void runtime_init(LONG mouse_x, LONG mouse_y) {
+void runtime_init() {
     runtime_deinit();
 
-    runtime_mouse_x = mouse_x;
-    runtime_mouse_y = mouse_y;
+    runtime_enabled = false;
 
-    runtime_enabled = true;
+    QueryPerformanceFrequency(&runtime_frequency);
 
-    runtime_knob_left = false;
-    runtime_knob_right = false;
-    runtime_knob_up = false;
-    runtime_knob_down = false;
+    runtime_knob_up_last_update.QuadPart = 0;
+    runtime_knob_left_last_update.QuadPart = 0;
+    runtime_knob_down_last_update.QuadPart = 0;
+    runtime_knob_right_last_update.QuadPart = 0;
 }
 
 void runtime_deinit() {
-    if (runtime_knob_left) {
+    if (runtime_knob_left_last_update.QuadPart != 0) {
+        runtime_knob_left_last_update.QuadPart = 0;
         key_input(KEY_1, false);
-        runtime_knob_left = false;
     }
 
-    if (runtime_knob_right) {
+    if (runtime_knob_right_last_update.QuadPart != 0) {
+        runtime_knob_right_last_update.QuadPart = 0;
         key_input(KEY_2, false);
-        runtime_knob_right = false;
     }
 
-    if (runtime_knob_up) {
+    if (runtime_knob_up_last_update.QuadPart != 0) {
+        runtime_knob_up_last_update.QuadPart = 0;
         key_input(KEY_3, false);
-        runtime_knob_up = false;
     }
 
-    if (runtime_knob_down) {
+    if (runtime_knob_down_last_update.QuadPart != 0) {
+        runtime_knob_down_last_update.QuadPart = 0;
         key_input(KEY_4, false);
-        runtime_knob_down = false;
     }
 }
