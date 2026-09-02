@@ -61,3 +61,16 @@ void mouse_move_event(LONG dx, LONG dy) {
         key_input(KEY_4, false);
     }
 }
+
+LRESULT CALLBACK MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
+    if (runtime_enabled && nCode >= 0 && wParam == WM_MOUSEMOVE) {
+        return 1;
+    }
+
+    return CallNextHookEx(
+        NULL,
+        nCode,
+        wParam,
+        lParam
+    );
+}

@@ -26,7 +26,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     LONG dx = raw->data.mouse.lLastX;
                     LONG dy = raw->data.mouse.lLastY;
 
-                    MouseProc(dx, dy);
+                    mouse_move_event(dx, dy);
                 }
 
                 return 0;

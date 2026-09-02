@@ -42,6 +42,17 @@ int main() {
         return 1;
     }
 
+    HHOOK mouseHook = SetWindowsHookEx(
+        WH_MOUSE_LL,
+        MouseProc,
+        NULL,
+        0
+    );
+
+    if (mouseHook == NULL) {
+        return 1;
+    }
+
     HHOOK keyboardHook = SetWindowsHookEx(
         WH_KEYBOARD_LL,
         KeyboardProc,
@@ -50,6 +61,7 @@ int main() {
     );
 
     if (keyboardHook == NULL) {
+        UnhookWindowsHookEx(mouseHook);
         return 1;
     }
 
@@ -61,6 +73,7 @@ int main() {
     }
 
     runtime_deinit();
+    UnhookWindowsHookEx(mouseHook);
     UnhookWindowsHookEx(keyboardHook);
 
     return 0;
