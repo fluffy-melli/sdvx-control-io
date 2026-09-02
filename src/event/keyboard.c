@@ -2,9 +2,9 @@
 
 #include "event/keyboard.h"
 
-#include "key/input.h"
-#include "key/constant.h"
-#include "runtime/value.h"
+#include "constants/key.h"
+#include "constants/runtime.h"
+#include "handler/keyboard.h"
 
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode >= 0) {
@@ -27,7 +27,7 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
             if (runtime_enabled) {
                 if ((code >= KEY_NUMBER_1 && code <= KEY_NUMBER_9) || code == KEY_NUMBER_0) {
-                    key_input(key_number_2_numpad(code), true);
+                    keyboard_input(number_2_numpad(code), true);
                     return 1;
                 }
             }
@@ -36,7 +36,7 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
         if (wParam == WM_KEYUP || wParam == WM_SYSKEYUP) {
             if (runtime_enabled) {
                 if ((code >= KEY_NUMBER_1 && code <= KEY_NUMBER_9) || code == KEY_NUMBER_0) {
-                    key_input(key_number_2_numpad(code), false);
+                    keyboard_input(number_2_numpad(code), false);
                     return 1;
                 }
             }

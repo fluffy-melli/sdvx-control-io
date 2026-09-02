@@ -3,7 +3,7 @@
 #include "event/wnd.h"
 #include "event/mouse.h"
 #include "event/keyboard.h"
-#include "runtime/value.h"
+#include "constants/runtime.h"
 
 int main() {
     HINSTANCE hInstance = GetModuleHandle(NULL);

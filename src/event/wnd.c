@@ -1,9 +1,10 @@
-#include <stdio.h>
 #include <windows.h>
 
 #include "event/wnd.h"
+
 #include "event/mouse.h"
-#include "runtime/value.h"
+#include "handler/mouse.h"
+#include "constants/runtime.h"
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     if (runtime_enabled) {
@@ -26,7 +27,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
                     LONG dx = raw->data.mouse.lLastX;
                     LONG dy = raw->data.mouse.lLastY;
 
-                    mouse_move_event(dx, dy);
+                    mouse_move(dx, dy);
                 }
 
                 return 0;

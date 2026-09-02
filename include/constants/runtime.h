@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <windows.h>
 
 bool runtime_enabled;
 

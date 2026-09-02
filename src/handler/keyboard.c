@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include <windows.h>
 
-#include "key/input.h"
+#include "handler/keyboard.h"
 
-void key_input(WORD scanCode, bool down) {
+void keyboard_input(WORD scanCode, bool down) {
     INPUT input = {0};
 
     input.type = INPUT_KEYBOARD;

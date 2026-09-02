@@ -29,4 +29,4 @@
 #define KEY_NUMPAD_8 0x48
 #define KEY_NUMPAD_9 0x49
 
-int key_number_2_numpad(int number);
+int number_2_numpad(int scanCode);

@@ -3,4 +3,4 @@
 #include <stdbool.h>
 #include <windows.h>
 
-void key_input(WORD scanCode, bool down);
+void keyboard_input(WORD scanCode, bool down);

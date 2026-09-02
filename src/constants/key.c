@@ -1,7 +1,7 @@
-#include "key/constant.h"
+#include "constants/key.h"
 
-int key_number_2_numpad(int number) {
-    switch (number) {
+int number_2_numpad(int scanCode) {
+    switch (scanCode) {
         case KEY_NUMBER_0: {
             return KEY_NUMPAD_0;
         }
